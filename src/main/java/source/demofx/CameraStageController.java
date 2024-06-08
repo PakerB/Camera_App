@@ -35,6 +35,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 import static org.opencv.objdetect.Objdetect.CASCADE_SCALE_IMAGE;
@@ -58,13 +59,15 @@ public class CameraStageController {
     private Button filter_button;
     @FXML
     private AnchorPane anchorPane;
-//    @FXML
-//    private StackPane stackPane;
 
     protected AtomicBoolean isCameraActive = new AtomicBoolean(false);
     protected VideoCapture cameraCapture;
     String source = "C:\\MyOpenCV\\opencv\\sources\\data\\haarcascades\\haarcascade_frontalface_default.xml";
     CascadeClassifier faceDetector = new CascadeClassifier(source);
+
+    public void xl(){
+        System.out.println("vl");
+    }
 
     protected void startStopCamera() {
         if (isCameraActive.get()) {
@@ -83,13 +86,12 @@ public class CameraStageController {
     protected void startCamera() {
         cameraCapture = new VideoCapture(0);
         Mat frame = new Mat();
-//        anchorPane.widthProperty().addListener((obs, oldVal, newVal) -> {
-//            CameraFrame.setFitWidth(newVal.doubleValue());
-//        });
-//        anchorPane.heightProperty().addListener((obs, oldVal, newVal) -> {
-//            CameraFrame.setFitHeight(newVal.doubleValue());
-//        });
-
+        anchorPane.widthProperty().addListener((obs, oldVal, newVal) -> {
+            CameraFrame.setFitWidth(newVal.doubleValue());
+        });
+        anchorPane.heightProperty().addListener((obs, oldVal, newVal) -> {
+            CameraFrame.setFitHeight(newVal.doubleValue());
+        });
 
         isCameraActive.set(true);
 
@@ -101,14 +103,15 @@ public class CameraStageController {
                 } else {
                     try {
                         if(detection_checkbox.isSelected()) {
-                            Mat frame_gray = new Mat();
-                            MatOfRect rostros = new MatOfRect();
-                            Imgproc.cvtColor(frame, frame_gray, Imgproc.COLOR_BGR2GRAY);
-                            Imgproc.equalizeHist(frame_gray, frame_gray);
-                            double w = frame.width();
-                            double h = frame.height();
-                            faceDetector.detectMultiScale(frame_gray, rostros, 1.1, 2, 0 | CASCADE_SCALE_IMAGE, new Size(30, 30), new Size(w, h));
-                            Rect[] facesArray = rostros.toArray();
+//                            Mat frame_gray = new Mat();
+//                            MatOfRect rostros = new MatOfRect();
+//                            Imgproc.cvtColor(frame, frame_gray, Imgproc.COLOR_BGR2GRAY);
+//                            Imgproc.equalizeHist(frame_gray, frame_gray);
+//                            double w = frame.width();
+//                            double h = frame.height();
+//                            faceDetector.detectMultiScale(frame_gray, rostros, 1.1, 2, 0 | CASCADE_SCALE_IMAGE, new Size(30, 30), new Size(w, h));
+                            FaceDetector faceDetector = new FaceDetector();
+                            List<Rect> facesArray = faceDetector.detectFaces(frame);
                             //System.out.println("Số người có trong Camera: " + facesArray.length);
 
                             for (Rect face : facesArray) {
