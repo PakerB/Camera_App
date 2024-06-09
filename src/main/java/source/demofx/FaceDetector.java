@@ -16,10 +16,10 @@ import static org.opencv.objdetect.Objdetect.CASCADE_SCALE_IMAGE;
 
 public class FaceDetector{
 
-    String sourceFaceDetector = "C:\\Users\\hoang\\OneDrive\\Desktop\\k0d3\\OOP\\MaybeFinal\\src\\main\\resources\\source\\demofx\\haarcascades\\haarcascade_frontalface_default.xml";
-    CascadeClassifier faceDetector = new CascadeClassifier((sourceFaceDetector));
-    String sourceEyesDetector = "C:\\Users\\hoang\\OneDrive\\Desktop\\k0d3\\OOP\\MaybeFinal\\src\\main\\resources\\source\\demofx\\haarcascades\\haarcascade_eye.xml";
-    CascadeClassifier eyesDetector = new CascadeClassifier((sourceEyesDetector));
+    String sourceFaceDetector = "/source/demofx/haarcascades/haarcascade_frontalface_alt2.xml";
+    CascadeClassifier faceDetector = new CascadeClassifier(getPath(sourceFaceDetector));
+    String sourceEyesDetector = "/source/demofx/haarcascades/haarcascade_eye_tree_eyeglasses.xml";
+    CascadeClassifier eyesDetector = new CascadeClassifier(getPath(sourceEyesDetector));
 
     public List<Rect> detectFaces(Mat image) {
         Mat frame_gray = new Mat();
@@ -44,14 +44,7 @@ public class FaceDetector{
     }
     private String getPath(String source){
         String absolutePath = Objects.requireNonNull(FaceDetector.class.getResource(source)).getPath();
-        {
-            // Nạp tệp
-            if (!faceDetector.load(absolutePath)) {
-                System.err.println("Không thể nạp tệp từ " + absolutePath);
-            } else {
-                System.out.println("Đã nạp thành công tệp.");
-            }
-        }
+        absolutePath = (String) absolutePath.substring(1,absolutePath.length());
         return absolutePath;
     }
 }
