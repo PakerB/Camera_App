@@ -52,11 +52,11 @@ public class Filter {
     public Mat overlayImage(Mat background, int filterType, Rect rect) {
         int stickerX1, stickerY1, stickerX2, stickerY2;
         stickerX1 = stickerY1 = stickerX2 = stickerY2 = 0;
-        if(filterType == 1) this.sticker = Imgcodecs.imread(getPath("/src/main/resources/FilterList/tai_meo.png"), Imgcodecs.IMREAD_UNCHANGED);
-        else if (filterType == 2) this.sticker = Imgcodecs.imread(getPath("/src/main/resources/FilterList/vuong_niem.png"), Imgcodecs.IMREAD_UNCHANGED);
-        else if (filterType == 3) this.sticker = Imgcodecs.imread(getPath("/src/main/resources/FilterList/message_iloveoop.png"), Imgcodecs.IMREAD_UNCHANGED);
-        else if (filterType == 4) this.sticker = Imgcodecs.imread(getPath("/src/main/resources/FilterList/blush4.png"), Imgcodecs.IMREAD_UNCHANGED);
-        else this.sticker = Imgcodecs.imread(getPath("/src/main/resources/FilterList/blush5.png"), Imgcodecs.IMREAD_UNCHANGED);
+        if(filterType == 1) this.sticker = Imgcodecs.imread(getPath("/FilterList/tai_meo.png"), Imgcodecs.IMREAD_UNCHANGED);
+        else if (filterType == 2) this.sticker = Imgcodecs.imread(getPath("/FilterList/vuong_niem.png"), Imgcodecs.IMREAD_UNCHANGED);
+        else if (filterType == 3) this.sticker = Imgcodecs.imread(getPath("/FilterList/message_iloveoop.png"), Imgcodecs.IMREAD_UNCHANGED);
+        else if (filterType == 4) this.sticker = Imgcodecs.imread(getPath("/FilterList/blush4.png"), Imgcodecs.IMREAD_UNCHANGED);
+        else this.sticker = Imgcodecs.imread(getPath("/FilterList/blush5.png"), Imgcodecs.IMREAD_UNCHANGED);
 
 //        if(filterType == 1) this.sticker = Imgcodecs.imread("D:\\fillter\\tai_meo.png", Imgcodecs.IMREAD_UNCHANGED);
 //        else if (filterType == 2) this.sticker = Imgcodecs.imread("D:\\fillter\\vuong_niem.png", Imgcodecs.IMREAD_UNCHANGED);

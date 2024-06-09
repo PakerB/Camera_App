@@ -120,3 +120,13 @@
     -fx-padding: 5px;        /* Khoảng cách nội dung */
     -fx-background-color: white; /* Màu nền */
 }
+/* Áp dụng màu sắc và phông chữ cho nhãn */
+#person_num {
+    -fx-font-weight: bold; /* Độ đậm của phông chữ */
+}
+
+/* Hiệu ứng khi di chuột vào nhãn */
+#person_num:hover {
+    -fx-font-weight: bold;
+    -fx-cursor: hand; /* Thay đổi hình dạng con trỏ */
+}

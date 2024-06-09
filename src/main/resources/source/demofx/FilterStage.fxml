@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="root" minHeight="700.0" minWidth="800.0" prefHeight="700.0" prefWidth="800.0" stylesheets="@filter.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="source.demofx.FilterController">
+<AnchorPane id="root" minHeight="700.0" minWidth="800.0" prefHeight="700.0" prefWidth="800.0" stylesheets="@filter.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="source.demofx.FilterStageController">
     <children>
         <Button id="takeAPhoto" fx:id="cameraButton" layoutX="750.0" layoutY="230.0" mnemonicParsing="false" onAction="#clickCapture" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="250.0">
          <graphic>

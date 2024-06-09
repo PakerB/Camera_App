@@ -1,27 +1,26 @@
 package source.demofx;
 
+
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
+
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
 import javafx.util.Duration;
 import org.opencv.core.Mat;
+
 import org.opencv.core.Rect;
-import org.opencv.imgproc.Imgproc;
 import org.opencv.videoio.VideoCapture;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
@@ -37,66 +36,53 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
-public class CameraStageController extends Controller{
+public class FilterStageController extends FilterController {
     @FXML
-    private Label lblnumber;
+    private ImageView CameraFrame;
     @FXML
-    private ImageView cameraFrame;
-    @FXML
-    private Pane anchorPane;
-    @FXML
-    private Pane stackPane;
-    protected AtomicBoolean isCameraActive = new AtomicBoolean(false);
+    private AnchorPane anchorPane;
     protected VideoCapture cameraCapture;
+    protected AtomicBoolean isCameraActive = new AtomicBoolean(false);
 
     @FXML
     protected void startStopCamera() {
-        if (isCameraActive.get()) {
-            stopCamera();
-            //lblnumber.setText("Person Number");
-        } else {
-//            if (isFilterValue.get()) {
-//                startCameraWithFilter();
-//            } else {
-            startCamera();
-            // }
-
-        }
+        super.setUp();
+        if (isCameraActive.get()) stopCamera();
+        else startCamera();
     }
 
     protected void startCamera() {
         cameraCapture = new VideoCapture(0);
-        Mat frame = new Mat();
-        anchorPane.widthProperty().addListener((obs, oldVal, newVal) -> {
-            cameraFrame.setFitWidth(newVal.doubleValue());
-        });
-        anchorPane.heightProperty().addListener((obs, oldVal, newVal) -> {
-            cameraFrame.setFitHeight(newVal.doubleValue());
-        });
 
+        final Mat[] frame = {new Mat()};
+
+        CameraFrame.setFitWidth(600);
+        CameraFrame.setFitHeight(450);
         isCameraActive.set(true);
 
         new Thread(() -> {
-            while (isCameraActive.get() && cameraCapture.read(frame)) {
-                if (frame.empty()) {
+            while (isCameraActive.get() && cameraCapture.read(frame[0])) {
+                if (frame[0].empty()) {
                     System.out.println("No detection");
                     break;
                 } else {
                     try {
-                        FaceDetector faceDetector = new FaceDetector();
-                        List<Rect> facesArray = faceDetector.detectFaces(frame);
-                        for (Rect face : facesArray) {
-                            Imgproc.rectangle(frame, new Point(face.x, face.y), new Point(face.x + face.width, face.y + face.height), new Scalar(123, 213, 23, 220), 2);
-                            Imgproc.putText(frame, "This is a person ", new Point(face.x, face.y - 20), 1, 1, new Scalar(255, 255, 255));
+                        int val = super.getFilterType();
+                        if(val > 0){
+                            FaceDetector faceDetector = new FaceDetector();
+                            List<Rect> facesArray = faceDetector.detectFaces(frame[0]);
+                            Filter filter = new Filter();
+//                            System.out.println(val);
+                            for (Rect face : facesArray)
+                                frame[0] = filter.overlayImage(frame[0].clone(),val, face);
                         }
                         Platform.runLater(() -> {
-                            lblnumber.setText("Have " + facesArray.size());
+//                            lblnumber.setText("Have " + facesArray.size());
                             MatOfByte mem = new MatOfByte();
-                            Imgcodecs.imencode(".bmp", frame, mem);
+                            Imgcodecs.imencode(".bmp", frame[0], mem);
                             InputStream in = new ByteArrayInputStream(mem.toArray());
                             Image im = new Image(in);
-
-                            cameraFrame.setImage(im);
+                            CameraFrame.setImage(im);
                         });
 
                         Thread.sleep(50);
@@ -106,6 +92,7 @@ public class CameraStageController extends Controller{
                     }
                 }
             }
+//            stopCamera();
         }).start();
     }
 
@@ -114,13 +101,12 @@ public class CameraStageController extends Controller{
         if (cameraCapture != null) {
             cameraCapture.release(); // Giải phóng tài nguyên camera
         }
-        Platform.runLater(() -> cameraFrame.setImage(null));
+        Platform.runLater(() -> CameraFrame.setImage(null));
     }
     @FXML
     public void clickCapture(ActionEvent event) {
         Image capturedImage = captureImage();
         createFlashEffect();
-
 
         if (capturedImage == null) {
             showAlert("No Image", "Failed to capture image.");
@@ -198,18 +184,16 @@ public class CameraStageController extends Controller{
 
     private void createFlashEffect() {
         // Tạo một Rectangle màu trắng trên StackPane để tạo hiệu ứng flash
-        javafx.scene.shape.Rectangle flash = new javafx.scene.shape.Rectangle(stackPane.getWidth(), stackPane.getHeight(), javafx.scene.paint.Color.WHITE);
-        stackPane.getChildren().add(flash);
+        javafx.scene.shape.Rectangle flash = new javafx.scene.shape.Rectangle(anchorPane.getWidth(), anchorPane.getHeight(), javafx.scene.paint.Color.WHITE);
+        anchorPane.getChildren().add(flash);
 
         // Tạo hiệu ứng mờ dần cho flash
         FadeTransition fadeTransition = new FadeTransition(Duration.millis(500), flash);
         fadeTransition.setFromValue(1.0);
         fadeTransition.setToValue(0.0);
-        fadeTransition.setOnFinished(e -> stackPane.getChildren().remove(flash));
+        fadeTransition.setOnFinished(e -> anchorPane.getChildren().remove(flash));
         fadeTransition.play();
     }
-
-    // Hiển thị thông báo lỗi khi chưa có ảnh chụp
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
@@ -221,8 +205,8 @@ public class CameraStageController extends Controller{
     private Image captureImage() {
         // Thực hiện chụp ảnh từ originalFrame hoặc nguồn hình ảnh của bạn
         // Đảm bảo originalFrame là kiểu phù hợp
-        if (cameraFrame instanceof ImageView) {
-            return ((ImageView) cameraFrame).getImage();
+        if (CameraFrame instanceof ImageView) {
+            return ((ImageView) CameraFrame).getImage();
         } else {
             System.out.println("No image available to capture.");
             return null;
@@ -231,38 +215,10 @@ public class CameraStageController extends Controller{
     }
 
     @FXML
-    public void clickFilter(ActionEvent event) throws Exception {
-        stopCamera();
-        System.out.println("ban da chon filter");
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FilterStage.fxml"));
-        Parent root = fxmlLoader.load(); // Chỉ cần load một lần
-        FilterStageController filterController = fxmlLoader.getController();
-
-        Scene scene = new Scene(root);
-        // Lấy Stage hiện tại và cập nhật Scene
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Choose Filter");
-        stage.setScene(scene);
-        filterController.startStopCamera();
-
+    protected void back(ActionEvent event) {
+        super.back(event);
     }
 
-    @FXML
-    public void clickChoose(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ImageStage.fxml"));
-        Parent root = fxmlLoader.load(); // Chỉ cần load một lần
-        ImageStageController imageStageController = fxmlLoader.getController();
-
-        Scene scene = new Scene(root);
-
-        // Lấy Stage hiện tại và cập nhật Scene
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Choose Image");
-        stage.setScene(scene);
-        stopCamera();
-        System.out.println("ban da chon anh");
-        imageStageController.clickChoose();
-    }
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     }
