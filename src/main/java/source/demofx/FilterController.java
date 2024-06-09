@@ -60,8 +60,8 @@ public class FilterController extends Controller {
     private RadioButton filter_button4;
     @FXML
     private RadioButton filter_button5;
-    @FXML
-    private RadioButton filter_button6;
+//    @FXML
+//    private RadioButton filter_button6;
     @FXML
     private ImageView filter_image0;
     @FXML
@@ -88,11 +88,11 @@ public class FilterController extends Controller {
 //        filter_image6.setOnMouseClicked(event -> {filter_button6.fire(); });
     }
 
-    private int filterType = 0;
+    protected int filterType = 0;
     protected VideoCapture cameraCapture;
     protected AtomicBoolean isCameraActive = new AtomicBoolean(false);
 
-    private int getFilterType(){
+    protected int getFilterType(){
         if(filter_button1.isSelected()) filterType = 1;
         else if(filter_button2.isSelected()) filterType = 2;
         else if(filter_button3.isSelected()) filterType = 3;
@@ -114,7 +114,6 @@ public class FilterController extends Controller {
 
         final Mat[] frame = {new Mat()};
 
-
         CameraFrame.setFitWidth(600);
         CameraFrame.setFitHeight(450);
         isCameraActive.set(true);
@@ -127,11 +126,11 @@ public class FilterController extends Controller {
                 } else {
                     try {
                         int val = getFilterType();
-                        System.out.println(val);
                         if(val > 0){
                             FaceDetector faceDetector = new FaceDetector();
                             List<Rect> facesArray = faceDetector.detectFaces(frame[0]);
                             Filter filter = new Filter();
+                            System.out.println(val);
                             for (Rect face : facesArray)
                                 frame[0] = filter.overlayImage(frame[0].clone(),val, face);
 

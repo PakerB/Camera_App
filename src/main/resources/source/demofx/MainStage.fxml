@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane id="root" fx:id="anchorPane" minHeight="600.0" minWidth="500.0" prefHeight="700.0" prefWidth="500.0" scaleShape="false" stylesheets="@cameraStage.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="source.demofx.CameraStageController">
+<Pane id="root" fx:id="anchorPane" minHeight="600.0" minWidth="500.0" prefHeight="700.0" prefWidth="500.0" scaleShape="false" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="source.demofx.CameraStageController">
    <children>
       <Label id="person_num" fx:id="lblnumber" layoutX="54.0" layoutY="30.0" prefHeight="27.0" prefWidth="155.0" text="Person number" textFill="#ff7384">
          <font>

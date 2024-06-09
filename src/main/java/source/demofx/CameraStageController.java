@@ -80,17 +80,8 @@ public class CameraStageController extends Controller{
                 } else {
                     try {
                         if(true) {
-//                            Mat frame_gray = new Mat();
-//                            MatOfRect rostros = new MatOfRect();
-//                            Imgproc.cvtColor(frame, frame_gray, Imgproc.COLOR_BGR2GRAY);
-//                            Imgproc.equalizeHist(frame_gray, frame_gray);
-//                            double w = frame.width();
-//                            double h = frame.height();
-//                            faceDetector.detectMultiScale(frame_gray, rostros, 1.1, 2, 0 | CASCADE_SCALE_IMAGE, new Size(30, 30), new Size(w, h));
                             FaceDetector faceDetector = new FaceDetector();
                             List<Rect> facesArray = faceDetector.detectFaces(frame);
-                            System.out.println("Số người có trong Camera: " + facesArray.size());
-
                             for (Rect face : facesArray) {
                                 Point center = new Point((face.x + face.width * 0.5), (face.y + face.height * 0.5));
                                 //Imgproc.ellipse(frame, center, new Size(face.width * 0.5, face.height * 0.5), 0, 0, 360, new Scalar(255, 0, 255), 4, 8, 0);
@@ -252,7 +243,7 @@ public class CameraStageController extends Controller{
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Choose Filter");
         stage.setScene(scene);
-        filterController.startCamera();
+        filterController.startStopCamera();
 
     }
 

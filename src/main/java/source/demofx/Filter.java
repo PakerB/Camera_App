@@ -13,7 +13,7 @@ import java.util.Objects;
 
 public class Filter {
     private Mat sticker;
-    double[] Scale = {0,0.9,1.0,1.0,1.0,1.0,1.0};
+    double[] Scale = {0,0.9,1.3,1.0,0.45,0.45,1.0};
 
     BufferedImage matToBufferedImage(Mat mat) {
         int type = (mat.channels() == 1) ? BufferedImage.TYPE_BYTE_GRAY : BufferedImage.TYPE_3BYTE_BGR;
@@ -21,19 +21,6 @@ public class Filter {
         mat.get(0, 0, ((DataBufferByte) image.getRaster().getDataBuffer()).getData());
         return image;
     }
-
-    private static Mat addAlphaChannel(Mat src) {
-        if (src.channels() == 4) return src;
-        Mat dst = new Mat(src.size(), CvType.CV_8UC4);
-        Imgproc.cvtColor(src, dst, Imgproc.COLOR_BGR2BGRA);
-        Mat alpha = new Mat(src.size(), CvType.CV_8UC1, new Scalar(255));
-        List<Mat> bgraChannels = new ArrayList<>();
-        Core.split(dst, bgraChannels);
-        bgraChannels.set(3, alpha);
-        Core.merge(bgraChannels, dst);
-        return dst;
-    }
-
 
     public Mat overlay(Mat background, Mat foreground, int x, int y){
         x = Math.max(0, x);
@@ -44,7 +31,6 @@ public class Filter {
         Rect roi = new Rect(x, y, w, h);
         Mat backgroundROI = background.submat(roi);
         Mat foregroundROI = foreground.submat(new Rect(0, 0, w, h));
-        foregroundROI = addAlphaChannel(foregroundROI);
         List<Mat> fgChannels = new ArrayList<>();
         Core.split(foregroundROI, fgChannels);
         Mat fgAlpha = fgChannels.get(3);
@@ -66,25 +52,35 @@ public class Filter {
     public Mat overlayImage(Mat background, int filterType, Rect rect) {
         int stickerX1, stickerY1, stickerX2, stickerY2;
         stickerX1 = stickerY1 = stickerX2 = stickerY2 = 0;
-        if(filterType == 1) this.sticker = Imgcodecs.imread(getPath("/src/main/resources/FilterList/tai_meo.png"));
-        else if (filterType == 2) this.sticker = Imgcodecs.imread(getPath("/src/main/resources/FilterList/vuong_niem.png"));
-        else if (filterType == 3) this.sticker = Imgcodecs.imread(getPath("/src/main/resources/FilterList/message_iloveoop.png"));
+        if(filterType == 1) this.sticker = Imgcodecs.imread(getPath("/src/main/resources/FilterList/tai_meo.png"), Imgcodecs.IMREAD_UNCHANGED);
+        else if (filterType == 2) this.sticker = Imgcodecs.imread(getPath("/src/main/resources/FilterList/vuong_niem.png"), Imgcodecs.IMREAD_UNCHANGED);
+        else if (filterType == 3) this.sticker = Imgcodecs.imread(getPath("/src/main/resources/FilterList/message_iloveoop.png"), Imgcodecs.IMREAD_UNCHANGED);
+        else if (filterType == 4) this.sticker = Imgcodecs.imread(getPath("/src/main/resources/FilterList/blush4.png"), Imgcodecs.IMREAD_UNCHANGED);
+        else this.sticker = Imgcodecs.imread(getPath("/src/main/resources/FilterList/blush5.png"), Imgcodecs.IMREAD_UNCHANGED);
 
-//        if(filterType == 1) this.sticker = Imgcodecs.imread("D:\\fillter\\tai_meo.png");
-//        else if (filterType == 2) this.sticker = Imgcodecs.imread("D:\\fillter\\vuong_niem.png");
-//        else  this.sticker = Imgcodecs.imread("D:\\fillter\\message_iloveoop.png");
+//        if(filterType == 1) this.sticker = Imgcodecs.imread("D:\\fillter\\tai_meo.png", Imgcodecs.IMREAD_UNCHANGED);
+//        else if (filterType == 2) this.sticker = Imgcodecs.imread("D:\\fillter\\vuong_niem.png", Imgcodecs.IMREAD_UNCHANGED);
+//        else if (filterType == 3) this.sticker = Imgcodecs.imread("D:\\fillter\\message_iloveoop.png", Imgcodecs.IMREAD_UNCHANGED);
+//        else if (filterType == 4) this.sticker = Imgcodecs.imread("D:\\fillter\\blush4.png", Imgcodecs.IMREAD_UNCHANGED);
+//        else this.sticker = Imgcodecs.imread("D:\\fillter\\blush5.png", Imgcodecs.IMREAD_UNCHANGED);
 
         // Resize sticker
-        double filterScale = 0.9;//Scale[filterType];
+        double filterScale = Scale[filterType];
         int stickerWidth = (int) (rect.width * filterScale);
         int stickerHeight = (int) (sticker.rows() * stickerWidth / sticker.cols());
         if(filterType != 4 && filterType != 5) {
             stickerX1 = rect.x + rect.width / 2 - stickerWidth / 2;
             stickerY1 = rect.y - stickerHeight;
+        }else{
+            stickerX1 = rect.x + rect.width / 4 - stickerWidth / 2;
+            stickerX2 = rect.x + 3 * rect.width / 4 - stickerWidth / 2;
+            int midFaceY = rect.y + rect.height / 2;
+            stickerY1 = stickerY2 = midFaceY - stickerHeight / 3;
         }
         Mat foreground = new Mat();
         Imgproc.resize(this.sticker, foreground, new Size(stickerWidth, stickerHeight));
         Mat output = overlay(background, foreground, stickerX1, stickerY1).clone();
+        if(filterType == 4 || filterType == 5) output = overlay(output.clone(), foreground, stickerX2, stickerY2).clone();
         return output.clone();
     }
     private String getPath(String source){
