@@ -248,13 +248,11 @@ public class CameraStageController extends Controller{
         FilterController filterController = fxmlLoader.getController();
 
         Scene scene = new Scene(root);
-        filterController.startCamera();
         // Lấy Stage hiện tại và cập nhật Scene
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
         stage.setTitle("Choose Filter");
         stage.setScene(scene);
-
+        filterController.startCamera();
 
     }
 

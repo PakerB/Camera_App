@@ -74,8 +74,8 @@ public class FilterController extends Controller {
     private ImageView filter_image4;
     @FXML
     private ImageView filter_image5;
-    @FXML
-    private ImageView filter_image6;
+//    @FXML
+//    private ImageView filter_image6;
 
 
     private void setUp(){
@@ -85,7 +85,7 @@ public class FilterController extends Controller {
         filter_image3.setOnMouseClicked(event -> {filter_button3.fire(); });
         filter_image4.setOnMouseClicked(event -> {filter_button4.fire(); });
         filter_image5.setOnMouseClicked(event -> {filter_button5.fire(); });
-        filter_image6.setOnMouseClicked(event -> {filter_button6.fire(); });
+//        filter_image6.setOnMouseClicked(event -> {filter_button6.fire(); });
     }
 
     private int filterType = 0;
@@ -98,7 +98,7 @@ public class FilterController extends Controller {
         else if(filter_button3.isSelected()) filterType = 3;
         else if(filter_button4.isSelected()) filterType = 4;
         else if(filter_button5.isSelected()) filterType = 5;
-        else if(filter_button6.isSelected()) filterType = 6;
+//        else if(filter_button6.isSelected()) filterType = 6;
         else filterType = 0;
         return filterType;
     }
@@ -114,13 +114,9 @@ public class FilterController extends Controller {
 
         final Mat[] frame = {new Mat()};
 
-        anchorPane.widthProperty().addListener((obs, oldVal, newVal) -> {
-            CameraFrame.setFitWidth(newVal.intValue());
-        });
-        anchorPane.heightProperty().addListener((obs, oldVal, newVal) -> {
-            CameraFrame.setFitHeight(newVal.intValue());
-        });
 
+        CameraFrame.setFitWidth(600);
+        CameraFrame.setFitHeight(450);
         isCameraActive.set(true);
 
         new Thread(() -> {

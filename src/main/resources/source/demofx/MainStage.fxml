@@ -18,14 +18,14 @@
          <font>
             <Font size="18.0" />
          </font></Label>
-      <StackPane fx:id="stackPane" layoutX="4.0" layoutY="67.0" prefHeight="490.0" prefWidth="493.0" scaleShape="false">
+      <StackPane fx:id="stackPane" layoutX="4.0" layoutY="67.0" prefHeight="490.0" prefWidth="490.0" scaleShape="false">
          <children>
             <!-- Thêm Rectangle trực tiếp vào StackPane -->
             <Rectangle fx:id="flashEffect" fill="#ffffff" opacity="0" />
-            <ImageView fx:id="cameraFrame" fitHeight="500.0" fitWidth="450.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="cameraFrame" fitHeight="400.0" fitWidth="450.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </StackPane>
-      <GridPane alignment="BOTTOM_CENTER" focusTraversable="true" layoutX="-1.0" layoutY="577.0" prefHeight="109.0" prefWidth="504.0" scaleShape="false">
+      <GridPane alignment="BOTTOM_CENTER" focusTraversable="true" layoutX="-1.0" layoutY="536.0" prefHeight="150.0" prefWidth="504.0" scaleShape="false">
          <columnConstraints>
             <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
