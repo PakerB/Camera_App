@@ -1,45 +1,121 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="source.demofx.FilterController">
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-  </rowConstraints>
-   <children>
-      <Pane prefHeight="200.0" prefWidth="200.0">
-         <children>
-            <Button fx:id="button_filter1" layoutX="124.0" layoutY="248.0" mnemonicParsing="false" onAction="#clickFilter1" text="Filter1" />
-            <ImageView fx:id="filter1" fitHeight="222.0" fitWidth="264.0" layoutX="18.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-         </children>
-      </Pane>
-      <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
-         <children>
-            <Button fx:id="button_filter2" layoutX="124.0" layoutY="248.0" mnemonicParsing="false" onAction="#clickFilter2" text="Filter2" />
-            <ImageView fx:id="filter2" fitHeight="222.0" fitWidth="264.0" layoutX="18.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-         </children>
-      </Pane>
-      <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
-         <children>
-            <Button fx:id="button_filter3" layoutX="124.0" layoutY="248.0" mnemonicParsing="false" onAction="#clickFilter3" text="Filter3" />
-            <ImageView fx:id="filter3" fitHeight="222.0" fitWidth="264.0" layoutX="18.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-         </children>
-      </Pane>
-      <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-         <children>
-            <Button fx:id="button_filter4" layoutX="124.0" layoutY="248.0" mnemonicParsing="false" onAction="#clickFilter4" text="Filter4" />
-            <ImageView fx:id="filter4" fitHeight="222.0" fitWidth="264.0" layoutX="18.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-         </children>
-      </Pane>
-   </children>
-</GridPane>
+<AnchorPane id="root" minHeight="700.0" minWidth="800.0" prefHeight="700.0" prefWidth="800.0" stylesheets="@filter.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="source.demofx.FilterController">
+    <children>
+        <Button id="takeAPhoto" fx:id="cameraButton" layoutX="750.0" layoutY="230.0" mnemonicParsing="false" onAction="#clickCapture" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="250.0">
+         <graphic>
+            <ImageView fitHeight="70.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@interface/Capture.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+        <Button id="back" layoutX="670.0" layoutY="50.0" mnemonicParsing="false" onAction="#back" prefHeight="70.0" prefWidth="60.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="50.0">
+         <graphic>
+            <ImageView fitHeight="70.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@interface/Back.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+        <AnchorPane fx:id="anchorPane" layoutX="51.0" layoutY="50.0" prefHeight="400.0" prefWidth="550.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="51.0" AnchorPane.rightAnchor="199.0" AnchorPane.topAnchor="50.0">
+            <children>
+                <ImageView id="CameraFrame" fx:id="CameraFrame" focusTraversable="true" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <viewport>
+                        <Rectangle2D />
+                    </viewport></ImageView>
+            </children>
+        </AnchorPane>
+        <ScrollPane id="scroll-pane" layoutY="470.0" maxHeight="158.0" minHeight="130.0" prefHeight="158.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <content>
+                <GridPane maxHeight="143.0" minHeight="140.0" prefHeight="145.0" prefWidth="840.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="140.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="140.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="140.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="140.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="140.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="140.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <StackPane maxHeight="114.0" maxWidth="120.0" minHeight="140.0" minWidth="140.0" prefHeight="114.0" prefWidth="120.0">
+                            <children>
+                                <ImageView fx:id="filter_image0" fitHeight="140.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" />
+                                <RadioButton id="button_filter1" fx:id="filter_button0" ellipsisString="" mnemonicParsing="false" onAction="#startStopCamera" prefHeight="115.0" prefWidth="124.0" visible="false">
+                                    <font>
+                                        <Font size="13.0" />
+                                    </font>
+                                    <toggleGroup>
+                                        <ToggleGroup fx:id="filter" />
+                                    </toggleGroup>
+                        </RadioButton>
+                            </children>
+                        </StackPane>
+                        <StackPane maxHeight="114.0" maxWidth="120.0" minHeight="140.0" minWidth="140.0" prefHeight="114.0" prefWidth="120.0" GridPane.columnIndex="1">
+                            <children>
+                                <ImageView fx:id="filter_image1" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../FilterList/tai_meo.png" />
+                                    </image>
+                        </ImageView>
+                                <RadioButton fx:id="filter_button1" mnemonicParsing="false" prefHeight="113.0" prefWidth="120.0" toggleGroup="$filter" visible="false" />
+                            </children>
+                        </StackPane>
+                        <StackPane maxHeight="114.0" maxWidth="120.0" minHeight="140.0" minWidth="140.0" prefHeight="114.0" prefWidth="120.0" GridPane.columnIndex="2">
+                            <children>
+                                <ImageView fx:id="filter_image2" fitHeight="96.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../FilterList/vuong_niem.png" />
+                                    </image>
+                        </ImageView>
+                                <RadioButton fx:id="filter_button2" mnemonicParsing="false" prefHeight="129.0" prefWidth="133.0" toggleGroup="$filter" visible="false" />
+                            </children>
+                        </StackPane>
+                        <StackPane maxHeight="114.0" maxWidth="120.0" minHeight="140.0" minWidth="140.0" prefHeight="114.0" prefWidth="120.0" GridPane.columnIndex="3">
+                            <children>
+                                <ImageView fx:id="filter_image3" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../FilterList/message_iloveoop.png" />
+                                    </image>
+                        </ImageView>
+                                <RadioButton fx:id="filter_button3" mnemonicParsing="false" prefHeight="157.0" prefWidth="171.0" toggleGroup="$filter" visible="false" />
+                            </children>
+                        </StackPane>
+                        <StackPane maxHeight="114.0" maxWidth="120.0" minHeight="140.0" minWidth="140.0" prefHeight="114.0" prefWidth="120.0" visible="false" GridPane.columnIndex="4">
+                            <children>
+                                <ImageView fx:id="filter_image4" fitHeight="114.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                                <RadioButton fx:id="filter_button4" mnemonicParsing="false" prefHeight="196.0" prefWidth="239.0" toggleGroup="$filter" />
+                            </children>
+                        </StackPane>
+                        <StackPane maxHeight="114.0" maxWidth="120.0" minHeight="140.0" minWidth="140.0" prefHeight="88.0" prefWidth="90.0" GridPane.columnIndex="5">
+                            <children>
+                                <ImageView fx:id="filter_image5" fitHeight="114.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                                <RadioButton fx:id="filter_button5" mnemonicParsing="false" prefHeight="188.0" prefWidth="430.0" toggleGroup="$filter" visible="false" />
+                            </children>
+                        </StackPane>
+                    </children>
+                </GridPane>
+         </content>
+      </ScrollPane>
+    </children>
+</AnchorPane>
