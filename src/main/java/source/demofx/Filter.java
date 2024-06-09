@@ -35,10 +35,6 @@ public abstract class Filter {
 
     protected Mat sticker;
 
-    public void testGit(){
-        System.out.printf("vl");
-    }
-
     BufferedImage matToBufferedImage(Mat mat) {
         int type = (mat.channels() == 1) ? BufferedImage.TYPE_BYTE_GRAY : BufferedImage.TYPE_3BYTE_BGR;
         BufferedImage image = new BufferedImage(mat.width(), mat.height(), type);

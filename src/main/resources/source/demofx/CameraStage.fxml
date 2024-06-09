@@ -17,7 +17,6 @@
                </viewport></ImageView>
          </children>
       </AnchorPane>
-      <Button fx:id="Go_Back_Button" mnemonicParsing="false" onMouseClicked="#goBackMainStage" prefHeight="25.0" prefWidth="68.0" text="GoBack" />
       <Button id="button1" fx:id="cameraButton" layoutX="705.0" layoutY="236.0" mnemonicParsing="false" text="TakeAPhoto" AnchorPane.rightAnchor="14.0" />
       <Button fx:id="filter_button" layoutX="736.0" layoutY="372.0" mnemonicParsing="false" text=":" AnchorPane.rightAnchor="45.0" />
       <CheckBox fx:id="detection_checkbox" layoutX="699.0" layoutY="283.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="93.0" text="Detection" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="283.0" />

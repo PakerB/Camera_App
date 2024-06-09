@@ -21,8 +21,7 @@ import java.io.InputStream;
 
 import static org.opencv.objdetect.Objdetect.CASCADE_SCALE_IMAGE;
 
-public class FilterController extends Filter {
-    @Override
+public class FilterController extends Controller {
     public void chooseFilter(Stage stage) {
         try {
             goCameraStage(stage);
@@ -30,9 +29,12 @@ public class FilterController extends Filter {
             e.printStackTrace();
         }
     }
+    @FXML
+    public void back(ActionEvent event, String pathFXML) {
+        super.back(event);
+    }
 
     void goCameraStage(Stage stage) throws IOException {
-        System.out.println("vl");
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CameraStage.fxml"));
         Parent root = fxmlLoader.load();
         CameraStageController cameraStageController = fxmlLoader.<CameraStageController>getController();

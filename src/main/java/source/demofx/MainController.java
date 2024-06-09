@@ -19,15 +19,6 @@ public class MainController {
 
     @FXML
     void goCameraStage(MouseEvent event) throws IOException {
-//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CameraStage.fxml"));
-//        Parent root = fxmlLoader.load();
-//        Scene scene = new Scene(root);
-//        scene.getStylesheets().add(getClass().getResource("Camera.css").toExternalForm());
-//        CameraStageController cameraStageController = fxmlLoader.<CameraStageController>getController();
-//        cameraStageController.startStopCamera();
-//        Stage stage = (Stage) Camera_Stage_Button.getScene().getWindow();
-//        stage.setTitle("Camera_Stage");
-//        stage.setScene(new Scene(root));
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CameraStage.fxml"));
         Parent root = fxmlLoader.load(); // Chỉ cần load một lần
 
@@ -36,7 +27,6 @@ public class MainController {
 
         // Tạo Scene và thêm CSS (nếu cần)
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("CameraStage.css").toExternalForm());
 
         // Lấy Stage hiện tại và cập nhật Scene
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

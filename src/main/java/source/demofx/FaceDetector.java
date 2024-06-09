@@ -9,16 +9,17 @@ import org.opencv.objdetect.CascadeClassifier;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static org.opencv.objdetect.Objdetect.CASCADE_SCALE_IMAGE;
 
 
 public class FaceDetector{
 
-    String sourceFaceDetector = "C:\\MyOpenCV\\opencv\\sources\\data\\haarcascades\\haarcascade_frontalface_default.xml";
-    CascadeClassifier faceDetector = new CascadeClassifier(sourceFaceDetector);
-    String sourceEyesDetector = "C:\\MyOpenCV\\opencv\\sources\\data\\haarcascades\\haarcascade_eye.xml";
-    CascadeClassifier eyesDetector = new CascadeClassifier(sourceEyesDetector);
+    String sourceFaceDetector = "C:\\Users\\hoang\\OneDrive\\Desktop\\k0d3\\OOP\\MaybeFinal\\src\\main\\resources\\source\\demofx\\haarcascades\\haarcascade_frontalface_default.xml";
+    CascadeClassifier faceDetector = new CascadeClassifier((sourceFaceDetector));
+    String sourceEyesDetector = "C:\\Users\\hoang\\OneDrive\\Desktop\\k0d3\\OOP\\MaybeFinal\\src\\main\\resources\\source\\demofx\\haarcascades\\haarcascade_eye.xml";
+    CascadeClassifier eyesDetector = new CascadeClassifier((sourceEyesDetector));
 
     public List<Rect> detectFaces(Mat image) {
         Mat frame_gray = new Mat();
@@ -41,16 +42,16 @@ public class FaceDetector{
         }
         return faces;
     }
-//    public String getPath(String source){
-//        String absolutePath = MainController.class.getResource(source).getPath();
-//        {
-//            // Nạp tệp
-//            if (!FaceDetector.load(absolutePath)) {
-//                System.err.println("Không thể nạp tệp từ " + absolutePath);
-//            } else {
-//                System.out.println("Đã nạp thành công tệp.");
-//            }
-//        }
-//        return absolutePath;
-//    }
+    private String getPath(String source){
+        String absolutePath = Objects.requireNonNull(FaceDetector.class.getResource(source)).getPath();
+        {
+            // Nạp tệp
+            if (!faceDetector.load(absolutePath)) {
+                System.err.println("Không thể nạp tệp từ " + absolutePath);
+            } else {
+                System.out.println("Đã nạp thành công tệp.");
+            }
+        }
+        return absolutePath;
+    }
 }

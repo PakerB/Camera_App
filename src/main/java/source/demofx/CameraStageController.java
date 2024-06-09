@@ -1,6 +1,5 @@
 package source.demofx;
 
-import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 
 import javafx.embed.swing.SwingFXUtils;
@@ -8,23 +7,20 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import org.opencv.core.Mat;
-import org.opencv.core.MatOfRect;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
-import org.opencv.objdetect.CascadeClassifier;
 import org.opencv.videoio.VideoCapture;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
@@ -38,37 +34,18 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
-import static org.opencv.objdetect.Objdetect.CASCADE_SCALE_IMAGE;
 
 
-public class CameraStageController {
-
-    @FXML
-    private ImageView CameraFrame;
+public class CameraStageController extends Controller{
 
     @FXML
-    private Button Go_Back_Button;
-
+    private ImageView cameraFrame;
     @FXML
-    private Button cameraButton;
-
-    @FXML
-    private CheckBox detection_checkbox;
-
-    @FXML
-    private Button filter_button;
-    @FXML
-    private AnchorPane anchorPane;
-
+    private Pane anchorPane;
     protected AtomicBoolean isCameraActive = new AtomicBoolean(false);
     protected VideoCapture cameraCapture;
-    String source = "C:\\MyOpenCV\\opencv\\sources\\data\\haarcascades\\haarcascade_frontalface_default.xml";
-    CascadeClassifier faceDetector = new CascadeClassifier(source);
 
-    public void xl(){
-        System.out.println("vl");
-    }
-
+    @FXML
     protected void startStopCamera() {
         if (isCameraActive.get()) {
             stopCamera();
@@ -87,10 +64,10 @@ public class CameraStageController {
         cameraCapture = new VideoCapture(0);
         Mat frame = new Mat();
         anchorPane.widthProperty().addListener((obs, oldVal, newVal) -> {
-            CameraFrame.setFitWidth(newVal.doubleValue());
+            cameraFrame.setFitWidth(newVal.doubleValue());
         });
         anchorPane.heightProperty().addListener((obs, oldVal, newVal) -> {
-            CameraFrame.setFitHeight(newVal.doubleValue());
+            cameraFrame.setFitHeight(newVal.doubleValue());
         });
 
         isCameraActive.set(true);
@@ -102,7 +79,7 @@ public class CameraStageController {
                     break;
                 } else {
                     try {
-                        if(detection_checkbox.isSelected()) {
+                        if(true) {
 //                            Mat frame_gray = new Mat();
 //                            MatOfRect rostros = new MatOfRect();
 //                            Imgproc.cvtColor(frame, frame_gray, Imgproc.COLOR_BGR2GRAY);
@@ -112,7 +89,7 @@ public class CameraStageController {
 //                            faceDetector.detectMultiScale(frame_gray, rostros, 1.1, 2, 0 | CASCADE_SCALE_IMAGE, new Size(30, 30), new Size(w, h));
                             FaceDetector faceDetector = new FaceDetector();
                             List<Rect> facesArray = faceDetector.detectFaces(frame);
-                            //System.out.println("Số người có trong Camera: " + facesArray.length);
+                            System.out.println("Số người có trong Camera: " + facesArray.size());
 
                             for (Rect face : facesArray) {
                                 Point center = new Point((face.x + face.width * 0.5), (face.y + face.height * 0.5));
@@ -123,10 +100,13 @@ public class CameraStageController {
                         }
                         Platform.runLater(() -> {
                             MatOfByte mem = new MatOfByte();
+//                            Mat resizedImage = resizeImage(frame, (int) anchorPane.getWidth(), (int) anchorPane.getHeight());
+//                            Mat paddedImage = addPadding(resizedImage, anchorPane.getWidth(),anchorPane.getHeight());
                             Imgcodecs.imencode(".bmp", frame, mem);
                             InputStream in = new ByteArrayInputStream(mem.toArray());
                             Image im = new Image(in);
-                            CameraFrame.setImage(im);
+
+                            cameraFrame.setImage(im);
                         });
 
                         Thread.sleep(50);
@@ -144,7 +124,7 @@ public class CameraStageController {
         if (cameraCapture != null) {
             cameraCapture.release(); // Giải phóng tài nguyên camera
         }
-        Platform.runLater(() -> CameraFrame.setImage(null));
+        Platform.runLater(() -> cameraFrame.setImage(null));
     }
     @FXML
     public void clickCapture(ActionEvent event) {
@@ -250,8 +230,8 @@ public class CameraStageController {
     private Image captureImage() {
         // Thực hiện chụp ảnh từ originalFrame hoặc nguồn hình ảnh của bạn
         // Đảm bảo originalFrame là kiểu phù hợp
-        if (CameraFrame instanceof ImageView) {
-            return ((ImageView) CameraFrame).getImage();
+        if (cameraFrame instanceof ImageView) {
+            return ((ImageView) cameraFrame).getImage();
         } else {
             System.out.println("No image available to capture.");
             return null;
@@ -260,23 +240,34 @@ public class CameraStageController {
     }
 
     @FXML
-    void clickFilter(ActionEvent event) throws Exception {
-//        startStopCamera();
-//        Stage stage = (Stage) filter_button.getScene().getWindow();
-//        Parent root = FXMLLoader.load(getClass().getResource("FilterStage.fxml"));
-//        stage.setTitle("Filter_Stage");
-//        stage.setScene(new Scene(root));
+    public void clickFilter(ActionEvent event) throws Exception {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FilterStage.fxml"));
+        Parent root = fxmlLoader.load(); // Chỉ cần load một lần
+        FilterController filterController = fxmlLoader.getController();
+
+        Scene scene = new Scene(root);
+
+        // Lấy Stage hiện tại và cập nhật Scene
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Choose Filter");
+        stage.setScene(scene);
     }
 
     @FXML
-    void goBackMainStage(MouseEvent event) throws IOException {
-        startStopCamera();
-        Stage stage = (Stage) Go_Back_Button.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("MainStage.fxml"));
-        stage.setTitle("Main_Stage");
-        stage.setScene(new Scene(root));
-    }
+    public void clickChoose(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ImageStage.fxml"));
+        Parent root = fxmlLoader.load(); // Chỉ cần load một lần
+        ImageStageController imageStageController = fxmlLoader.getController();
 
+        Scene scene = new Scene(root);
+
+        // Lấy Stage hiện tại và cập nhật Scene
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Choose Image");
+        stage.setScene(scene);
+        stopCamera();
+        System.out.println("ban da chon anh");
+    }
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     }
