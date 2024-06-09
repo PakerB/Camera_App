@@ -35,7 +35,7 @@
             </ImageView>
          </graphic>
       </Button>
-        <AnchorPane fx:id="anchorPane" AnchorPane.bottomAnchor="130.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="40.0">
+        <AnchorPane fx:id="anchorPane" layoutX="60.0" layoutY="40.0" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="40.0">
             <children>
                 <ImageView id="CameraFrame" fx:id="CameraFrame" focusTraversable="true" pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <viewport>
@@ -62,7 +62,8 @@
                     <children>
                         <StackPane maxHeight="114.0" maxWidth="120.0" minHeight="114.0" minWidth="120.0" prefHeight="114.0" prefWidth="120.0">
                             <children>
-                                <RadioButton id="button_filter1" fx:id="filter_button0" ellipsisString="" mnemonicParsing="false" onAction="#startStopCamera" visible="false">
+                                <ImageView fx:id="filter_image0" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                                <RadioButton id="button_filter1" fx:id="filter_button0" ellipsisString="" mnemonicParsing="false" onAction="#startStopCamera" prefHeight="115.0" prefWidth="124.0" visible="false">
                                     <font>
                                         <Font size="13.0" />
                                     </font>
@@ -70,55 +71,54 @@
                                         <ToggleGroup fx:id="filter" />
                                     </toggleGroup>
                         </RadioButton>
-                                <ImageView fx:id="filter_image0" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
                             </children>
                         </StackPane>
                         <StackPane maxHeight="114.0" maxWidth="120.0" minHeight="114.0" minWidth="120.0" prefHeight="114.0" prefWidth="120.0" GridPane.columnIndex="1">
                             <children>
-                                <RadioButton fx:id="filter_button1" mnemonicParsing="false" toggleGroup="$filter" visible="false" />
                                 <ImageView fx:id="filter_image1" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@../../FilterList/tai_meo.png" />
                                     </image>
                         </ImageView>
+                                <RadioButton fx:id="filter_button1" mnemonicParsing="false" prefHeight="113.0" prefWidth="120.0" toggleGroup="$filter" visible="false" />
                             </children>
                         </StackPane>
                         <StackPane maxHeight="114.0" maxWidth="120.0" minHeight="114.0" minWidth="120.0" prefHeight="114.0" prefWidth="120.0" GridPane.columnIndex="2">
                             <children>
-                                <RadioButton fx:id="filter_button2" mnemonicParsing="false" toggleGroup="$filter" visible="false" />
                                 <ImageView fx:id="filter_image2" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@../../FilterList/vuong_niem.png" />
                                     </image>
                         </ImageView>
+                                <RadioButton fx:id="filter_button2" mnemonicParsing="false" prefHeight="129.0" prefWidth="133.0" toggleGroup="$filter" visible="false" />
                             </children>
                         </StackPane>
                         <StackPane maxHeight="114.0" maxWidth="120.0" minHeight="114.0" minWidth="120.0" prefHeight="114.0" prefWidth="120.0" GridPane.columnIndex="3">
                             <children>
-                                <RadioButton fx:id="filter_button3" mnemonicParsing="false" toggleGroup="$filter" visible="false" />
                                 <ImageView fx:id="filter_image3" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@../../FilterList/message_iloveoop.png" />
                                     </image>
                         </ImageView>
+                                <RadioButton fx:id="filter_button3" mnemonicParsing="false" prefHeight="157.0" prefWidth="171.0" toggleGroup="$filter" visible="false" />
                             </children>
                         </StackPane>
                         <StackPane maxHeight="114.0" maxWidth="120.0" minHeight="114.0" minWidth="120.0" prefHeight="114.0" prefWidth="120.0" visible="false" GridPane.columnIndex="4">
                             <children>
-                                <RadioButton fx:id="filter_button4" mnemonicParsing="false" toggleGroup="$filter" />
                                 <ImageView fx:id="filter_image4" fitHeight="114.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                                <RadioButton fx:id="filter_button4" mnemonicParsing="false" prefHeight="196.0" prefWidth="239.0" toggleGroup="$filter" />
                             </children>
                         </StackPane>
-                        <StackPane maxHeight="114.0" maxWidth="120.0" minHeight="114.0" minWidth="120.0" prefHeight="114.0" prefWidth="120.0" GridPane.columnIndex="5">
+                        <StackPane maxHeight="114.0" maxWidth="120.0" minHeight="88.0" minWidth="90.0" prefHeight="88.0" prefWidth="90.0" GridPane.columnIndex="5">
                             <children>
-                                <RadioButton fx:id="filter_button5" mnemonicParsing="false" toggleGroup="$filter" visible="false" />
                                 <ImageView fx:id="filter_image5" fitHeight="114.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                                <RadioButton fx:id="filter_button5" mnemonicParsing="false" prefHeight="188.0" prefWidth="430.0" toggleGroup="$filter" visible="false" />
                             </children>
                         </StackPane>
                         <StackPane maxHeight="114.0" maxWidth="120.0" minHeight="114.0" minWidth="120.0" prefHeight="114.0" prefWidth="120.0" GridPane.columnIndex="6">
                             <children>
-                                <RadioButton fx:id="filter_button6" mnemonicParsing="false" toggleGroup="$filter" visible="false" />
                                 <ImageView fx:id="filter_image6" fitHeight="114.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                                <RadioButton fx:id="filter_button6" mnemonicParsing="false" prefHeight="183.0" prefWidth="294.0" toggleGroup="$filter" visible="false" />
                             </children>
                         </StackPane>
                     </children>

@@ -114,11 +114,11 @@ public class FilterController extends Controller {
 
         final Mat[] frame = {new Mat()};
 
-//        anchorPane.widthProperty().addListener((obs, oldVal, newVal) -> {
-//            CameraFrame.setFitWidth(newVal.doubleValue());
-//        });
+        anchorPane.widthProperty().addListener((obs, oldVal, newVal) -> {
+            CameraFrame.setFitWidth(newVal.intValue());
+        });
         anchorPane.heightProperty().addListener((obs, oldVal, newVal) -> {
-            CameraFrame.setFitHeight(newVal.doubleValue());
+            CameraFrame.setFitHeight(newVal.intValue());
         });
 
         isCameraActive.set(true);
@@ -131,6 +131,7 @@ public class FilterController extends Controller {
                 } else {
                     try {
                         int val = getFilterType();
+                        System.out.println(val);
                         if(val > 0){
                             FaceDetector faceDetector = new FaceDetector();
                             List<Rect> facesArray = faceDetector.detectFaces(frame[0]);
@@ -154,6 +155,7 @@ public class FilterController extends Controller {
                     }
                 }
             }
+//            stopCamera();
         }).start();
     }
 
