@@ -13,7 +13,6 @@ public class Main extends Application {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         launch(args);
 
-
     }
 
     @Override

@@ -241,16 +241,21 @@ public class CameraStageController extends Controller{
 
     @FXML
     public void clickFilter(ActionEvent event) throws Exception {
+        stopCamera();
+        System.out.println("ban da chon filter");
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FilterStage.fxml"));
         Parent root = fxmlLoader.load(); // Chỉ cần load một lần
         FilterController filterController = fxmlLoader.getController();
 
         Scene scene = new Scene(root);
-
+        filterController.startCamera();
         // Lấy Stage hiện tại và cập nhật Scene
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
         stage.setTitle("Choose Filter");
         stage.setScene(scene);
+
+
     }
 
     @FXML

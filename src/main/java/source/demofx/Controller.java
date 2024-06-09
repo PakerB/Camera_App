@@ -16,7 +16,7 @@ public abstract class Controller {
         this.stage = stage;
     }
     @FXML
-    public void back(ActionEvent event){
+    protected void back(ActionEvent event){
         try {
             // Thêm fxml
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainStage.fxml"));

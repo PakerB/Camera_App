@@ -9,6 +9,7 @@ import java.awt.image.DataBufferByte;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Filter {
     private Mat sticker;
@@ -65,12 +66,13 @@ public class Filter {
     public Mat overlayImage(Mat background, int filterType, Rect rect) {
         int stickerX1, stickerY1, stickerX2, stickerY2;
         stickerX1 = stickerY1 = stickerX2 = stickerY2 = 0;
-//        if(filterType == 1) this.sticker = Imgcodecs.imread("src/main/resources/filterList/tai_meo.png");
-//        else if (filterType == 2) this.sticker = Imgcodecs.imread("src/main/resources/filterList/vuong_niem.png");
-//        else if (filterType == 3) this.sticker = Imgcodecs.imread("src/main/resources/filterList/message_iloveoop.png");
-        if(filterType == 1) this.sticker = Imgcodecs.imread("D:\\fillter\\tai_meo.png");
-        else if (filterType == 2) this.sticker = Imgcodecs.imread("D:\\fillter\\vuong_niem.png");
-        else  this.sticker = Imgcodecs.imread("D:\\fillter\\message_iloveoop.png");
+        if(filterType == 1) this.sticker = Imgcodecs.imread(getPath("/src/main/resources/FilterList/tai_meo.png"));
+        else if (filterType == 2) this.sticker = Imgcodecs.imread(getPath("/src/main/resources/FilterList/vuong_niem.png"));
+        else if (filterType == 3) this.sticker = Imgcodecs.imread(getPath("/src/main/resources/FilterList/message_iloveoop.png"));
+
+//        if(filterType == 1) this.sticker = Imgcodecs.imread("D:\\fillter\\tai_meo.png");
+//        else if (filterType == 2) this.sticker = Imgcodecs.imread("D:\\fillter\\vuong_niem.png");
+//        else  this.sticker = Imgcodecs.imread("D:\\fillter\\message_iloveoop.png");
 
         // Resize sticker
         double filterScale = 0.9;//Scale[filterType];
@@ -85,6 +87,10 @@ public class Filter {
         Mat output = overlay(background, foreground, stickerX1, stickerY1).clone();
         return output.clone();
     }
-
+    private String getPath(String source){
+        String absolutePath = Objects.requireNonNull(Filter.class.getResource(source)).getPath();
+        absolutePath = (String) absolutePath.substring(1,absolutePath.length());
+        return absolutePath;
+    }
 
 }

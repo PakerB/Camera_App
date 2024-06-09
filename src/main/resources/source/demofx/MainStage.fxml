@@ -12,20 +12,20 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane id="root" fx:id="anchorPane" scaleShape="false" stylesheets="@cameraStage.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="source.demofx.CameraStageController">
+<Pane id="root" fx:id="anchorPane" minHeight="600.0" minWidth="500.0" prefHeight="700.0" prefWidth="500.0" scaleShape="false" stylesheets="@cameraStage.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="source.demofx.CameraStageController">
    <children>
-      <Label id="person_num" fx:id="lblnumber" layoutX="77.0" layoutY="49.0" prefHeight="25.0" prefWidth="121.0" text="Person number" textFill="#ff7384">
+      <Label id="person_num" fx:id="lblnumber" layoutX="54.0" layoutY="30.0" prefHeight="27.0" prefWidth="155.0" text="Person number" textFill="#ff7384">
          <font>
             <Font size="18.0" />
          </font></Label>
-      <StackPane fx:id="stackPane" layoutX="6.0" layoutY="94.0" prefHeight="490.0" prefWidth="493.0" scaleShape="false">
+      <StackPane fx:id="stackPane" layoutX="4.0" layoutY="67.0" prefHeight="490.0" prefWidth="493.0" scaleShape="false">
          <children>
             <!-- Thêm Rectangle trực tiếp vào StackPane -->
             <Rectangle fx:id="flashEffect" fill="#ffffff" opacity="0" />
-            <ImageView fx:id="cameraFrame" fitHeight="462.0" fitWidth="462.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="cameraFrame" fitHeight="500.0" fitWidth="450.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </StackPane>
-      <GridPane alignment="BOTTOM_CENTER" focusTraversable="true" layoutX="-1.0" layoutY="599.0" prefHeight="109.0" prefWidth="504.0" scaleShape="false">
+      <GridPane alignment="BOTTOM_CENTER" focusTraversable="true" layoutX="-1.0" layoutY="577.0" prefHeight="109.0" prefWidth="504.0" scaleShape="false">
          <columnConstraints>
             <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
@@ -61,11 +61,13 @@
                </graphic></Button>
          </children>
       </GridPane>
-      <Button fx:id="filter" layoutX="317.0" layoutY="43.0" mnemonicParsing="false" onAction="#clickFilter" />
-      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="351.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@interface/Filter.png" />
-         </image>
-      </ImageView>
+      <Button fx:id="filter" layoutX="366.0" layoutY="14.0" mnemonicParsing="false" onAction="#clickFilter">
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@interface/Filter.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
    </children>
 </Pane>
