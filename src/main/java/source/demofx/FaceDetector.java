@@ -42,7 +42,7 @@ public class FaceDetector{
         return faces;
     }
 //    public String getPath(String source){
-//        String absolutePath = MainController.class.getResource(source).getPath();
+//        String absolutePath = FaceDetector.class.getResource(source).getPath();
 //        {
 //            // Nạp tệp
 //            if (!FaceDetector.load(absolutePath)) {
@@ -52,5 +52,8 @@ public class FaceDetector{
 //            }
 //        }
 //        return absolutePath;
+//    }
+
+//    private static boolean load(String absolutePath) {
 //    }
 }

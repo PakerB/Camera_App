@@ -1,6 +1,6 @@
 package source.demofx;
 
-import javafx.animation.FadeTransition;
+
 import javafx.application.Platform;
 
 import javafx.embed.swing.SwingFXUtils;
@@ -16,15 +16,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
+
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Duration;
+
 import org.opencv.core.Mat;
-import org.opencv.core.MatOfRect;
+
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
-import org.opencv.objdetect.CascadeClassifier;
 import org.opencv.videoio.VideoCapture;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
@@ -38,54 +37,85 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
-import static org.opencv.objdetect.Objdetect.CASCADE_SCALE_IMAGE;
 
 
 public class CameraStageController {
-
     @FXML
     private ImageView CameraFrame;
-
     @FXML
     private Button Go_Back_Button;
-
-    @FXML
-    private Button cameraButton;
-
-    @FXML
-    private CheckBox detection_checkbox;
-
-    @FXML
-    private Button filter_button;
     @FXML
     private AnchorPane anchorPane;
+    @FXML
+    private Button cameraButton;
+    @FXML
+    private ToggleGroup filter;
+    @FXML
+    private RadioButton filter_button0;
+    @FXML
+    private RadioButton filter_button1;
+    @FXML
+    private RadioButton filter_button2;
+    @FXML
+    private RadioButton filter_button3;
+    @FXML
+    private RadioButton filter_button4;
+    @FXML
+    private RadioButton filter_button5;
+    @FXML
+    private RadioButton filter_button6;
+    @FXML
+    private ImageView filter_image0;
+    @FXML
+    private ImageView filter_image1;
+    @FXML
+    private ImageView filter_image2;
+    @FXML
+    private ImageView filter_image3;
+    @FXML
+    private ImageView filter_image4;
+    @FXML
+    private ImageView filter_image5;
+    @FXML
+    private ImageView filter_image6;
 
-    protected AtomicBoolean isCameraActive = new AtomicBoolean(false);
+
+    private void setUp(){
+        filter_image0.setOnMouseClicked(event -> {filter_button0.fire(); });
+        filter_image1.setOnMouseClicked(event -> {filter_button1.fire(); });
+        filter_image2.setOnMouseClicked(event -> {filter_button2.fire(); });
+        filter_image3.setOnMouseClicked(event -> {filter_button3.fire(); });
+        filter_image4.setOnMouseClicked(event -> {filter_button4.fire(); });
+        filter_image5.setOnMouseClicked(event -> {filter_button5.fire(); });
+        filter_image6.setOnMouseClicked(event -> {filter_button6.fire(); });
+    }
+
+    private int filterType = 0;
     protected VideoCapture cameraCapture;
-    String source = "C:\\MyOpenCV\\opencv\\sources\\data\\haarcascades\\haarcascade_frontalface_default.xml";
-    CascadeClassifier faceDetector = new CascadeClassifier(source);
+    protected AtomicBoolean isCameraActive = new AtomicBoolean(false);
 
-    public void xl(){
-        System.out.println("vl");
+    protected int getFilterType(){
+        if(filter_button1.isSelected()) filterType = 1;
+        else if(filter_button2.isSelected()) filterType = 2;
+        else if(filter_button3.isSelected()) filterType = 3;
+        else if(filter_button4.isSelected()) filterType = 4;
+        else if(filter_button5.isSelected()) filterType = 5;
+        else if(filter_button6.isSelected()) filterType = 6;
+        else filterType = 0;
+        return filterType;
     }
 
     protected void startStopCamera() {
-        if (isCameraActive.get()) {
-            stopCamera();
-            //lblnumber.setText("Person Number");
-        } else {
-//            if (isFilterValue.get()) {
-//                startCameraWithFilter();
-//            } else {
-            startCamera();
-            // }
-
-        }
+        setUp();
+        if (isCameraActive.get()) stopCamera();
+        else startCamera();
     }
 
     protected void startCamera() {
         cameraCapture = new VideoCapture(0);
-        Mat frame = new Mat();
+
+        final Mat[] frame = {new Mat()};
+
         anchorPane.widthProperty().addListener((obs, oldVal, newVal) -> {
             CameraFrame.setFitWidth(newVal.doubleValue());
         });
@@ -96,34 +126,24 @@ public class CameraStageController {
         isCameraActive.set(true);
 
         new Thread(() -> {
-            while (isCameraActive.get() && cameraCapture.read(frame)) {
-                if (frame.empty()) {
+            while (isCameraActive.get() && cameraCapture.read(frame[0])) {
+                if (frame[0].empty()) {
                     System.out.println("No detection");
                     break;
                 } else {
                     try {
-                        if(detection_checkbox.isSelected()) {
-//                            Mat frame_gray = new Mat();
-//                            MatOfRect rostros = new MatOfRect();
-//                            Imgproc.cvtColor(frame, frame_gray, Imgproc.COLOR_BGR2GRAY);
-//                            Imgproc.equalizeHist(frame_gray, frame_gray);
-//                            double w = frame.width();
-//                            double h = frame.height();
-//                            faceDetector.detectMultiScale(frame_gray, rostros, 1.1, 2, 0 | CASCADE_SCALE_IMAGE, new Size(30, 30), new Size(w, h));
+                        int val = getFilterType();
+                        if(val > 0){
                             FaceDetector faceDetector = new FaceDetector();
-                            List<Rect> facesArray = faceDetector.detectFaces(frame);
-                            //System.out.println("Số người có trong Camera: " + facesArray.length);
+                            List<Rect> facesArray = faceDetector.detectFaces(frame[0]);
+                            Filter filter = new Filter();
+                            for (Rect face : facesArray)
+                                frame[0] = filter.overlayImage(frame[0].clone(),val, face);
 
-                            for (Rect face : facesArray) {
-                                Point center = new Point((face.x + face.width * 0.5), (face.y + face.height * 0.5));
-                                //Imgproc.ellipse(frame, center, new Size(face.width * 0.5, face.height * 0.5), 0, 0, 360, new Scalar(255, 0, 255), 4, 8, 0);
-                                Imgproc.rectangle(frame, new Point(face.x, face.y), new Point(face.x + face.width, face.y + face.height), new Scalar(123, 213, 23, 220), 2);
-                                Imgproc.putText(frame, "This is person ", new Point(face.x, face.y - 20), 1, 1, new Scalar(255, 255, 255));
-                            }
                         }
                         Platform.runLater(() -> {
                             MatOfByte mem = new MatOfByte();
-                            Imgcodecs.imencode(".bmp", frame, mem);
+                            Imgcodecs.imencode(".bmp", frame[0], mem);
                             InputStream in = new ByteArrayInputStream(mem.toArray());
                             Image im = new Image(in);
                             CameraFrame.setImage(im);
@@ -225,20 +245,7 @@ public class CameraStageController {
         });
     }
 
-//    private void createFlashEffect() {
-//        // Tạo một Rectangle màu trắng trên StackPane để tạo hiệu ứng flash
-//        javafx.scene.shape.Rectangle flash = new javafx.scene.shape.Rectangle(stackPane.getWidth(), stackPane.getHeight(), javafx.scene.paint.Color.WHITE);
-//        stackPane.getChildren().add(flash);
-//
-//        // Tạo hiệu ứng mờ dần cho flash
-//        FadeTransition fadeTransition = new FadeTransition(Duration.millis(500), flash);
-//        fadeTransition.setFromValue(1.0);
-//        fadeTransition.setToValue(0.0);
-//        fadeTransition.setOnFinished(e -> stackPane.getChildren().remove(flash));
-//        fadeTransition.play();
-//    }
 
-    // Hiển thị thông báo lỗi khi chưa có ảnh chụp
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
@@ -257,15 +264,6 @@ public class CameraStageController {
             return null;
         }
 
-    }
-
-    @FXML
-    void clickFilter(ActionEvent event) throws Exception {
-//        startStopCamera();
-//        Stage stage = (Stage) filter_button.getScene().getWindow();
-//        Parent root = FXMLLoader.load(getClass().getResource("FilterStage.fxml"));
-//        stage.setTitle("Filter_Stage");
-//        stage.setScene(new Scene(root));
     }
 
     @FXML
