@@ -99,11 +99,11 @@
 -fx-background-color: transparent;
 }
 .scroll-bar:vertical .thumb, .scroll-bar:horizontal .thumb {
-    -fx-background-color: rgb(248, 218, 84); /* Đặt màu cho thanh cuộn */
+    -fx-background-color: #ffb7c1; /* Đặt màu cho thanh cuộn */
 }
 
 .scroll-bar:vertical .track, .scroll-bar:horizontal .track {
-    -fx-background-color: #00ffe1; /* Đặt màu cho đường dẫn */
+    -fx-background-color: #ffffff; /* Đặt màu cho đường dẫn */
 }
 .radio-button{
     -fx-background: transparent;

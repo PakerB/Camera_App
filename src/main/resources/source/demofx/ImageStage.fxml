@@ -17,30 +17,13 @@
 
 <AnchorPane id="root" minHeight="700.0" minWidth="800.0" prefHeight="700.0" prefWidth="800.0" stylesheets="@filter.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="source.demofx.ImageStageController">
    <children>
-      <Button id="takeAPhoto" fx:id="cameraButton" layoutX="750.0" layoutY="230.0" mnemonicParsing="false" onAction="#clickChoose" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="250.0">
-         <graphic>
-            <ImageView fitHeight="70.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@interface/Library.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Button id="back" layoutX="670.0" layoutY="50.0" mnemonicParsing="false" onAction="#back" prefHeight="70.0" prefWidth="60.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="50.0">
-         <graphic>
-            <ImageView fitHeight="70.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@interface/Back.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <AnchorPane fx:id="anchorPane" layoutX="51.0" layoutY="50.0" prefHeight="400.0" prefWidth="550.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="51.0" AnchorPane.rightAnchor="199.0" AnchorPane.topAnchor="50.0">
+      <AnchorPane fx:id="anchorPane" layoutX="51.0" layoutY="50.0" maxHeight="450.0" maxWidth="600.0" prefHeight="450.0" prefWidth="600.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
          <children>
-            <ImageView id="CameraFrame" fx:id="image" focusTraversable="true" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <ImageView id="CameraFrame" fx:id="image" focusTraversable="true" pickOnBounds="true">
                <viewport>
                   <Rectangle2D />
-               </viewport></ImageView>
+               </viewport>
+            </ImageView>
          </children>
       </AnchorPane>
       <ScrollPane id="scroll-pane" layoutY="470.0" maxHeight="158.0" minHeight="130.0" prefHeight="158.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
@@ -126,6 +109,24 @@
             </GridPane>
          </content>
       </ScrollPane>
+      <Button id="takeAPhoto" fx:id="cameraButton" layoutX="750.0" layoutY="230.0" mnemonicParsing="false" onAction="#clickChoose" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="250.0">
+         <graphic>
+            <ImageView fitHeight="70.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@interface/Library.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button id="back" layoutX="670.0" layoutY="50.0" mnemonicParsing="false" onAction="#back" prefHeight="70.0" prefWidth="60.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="50.0">
+         <graphic>
+            <ImageView fitHeight="70.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@interface/Back.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
       <Label id="person_num" fx:id="lblnumber" layoutX="51.0" layoutY="23.0" prefHeight="27.0" prefWidth="200.0" text="Person number" textFill="#ff7384">
          <font>
             <Font size="18.0" />

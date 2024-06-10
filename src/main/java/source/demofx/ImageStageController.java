@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import org.opencv.core.Mat;
@@ -19,6 +20,7 @@ import org.opencv.core.Scalar;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.io.File;
@@ -34,10 +36,11 @@ public class ImageStageController extends FilterController{
     @FXML
     private ImageView image;
     @FXML
+    private AnchorPane anchorPane;
+    @FXML
     private StackPane image_layout;
-    private static Image lastImage;
-    public void setLastImage(Image a){
-        lastImage = a;
+    public StackPane getImage_layout() {
+        return image_layout;
     }
     public File copiedFile;
     public File selectedFile;
@@ -45,7 +48,6 @@ public class ImageStageController extends FilterController{
 
     @FXML
     public void clickChoose() {
-
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
 
@@ -91,7 +93,10 @@ public class ImageStageController extends FilterController{
             // Hiển thị ảnh đã chọn ban đầu
             BufferedImage bufferedImage = matToBufferedImage(newImage);
             WritableImage resultImage = SwingFXUtils.toFXImage(bufferedImage, null);
-            this.image.setImage(resultImage);
+
+            image.setImage(resultImage);
+            ImageZoomPane imageZoomPane = new ImageZoomPane(image);
+            this.anchorPane.getChildren().add(imageZoomPane);
         }
     }
     @FXML
@@ -140,7 +145,6 @@ public class ImageStageController extends FilterController{
 
         Mat resizedImage = new Mat();
         Imgproc.resize(image, resizedImage, new org.opencv.core.Size(newWidth, newHeight));
-
         return resizedImage;
     }
 
