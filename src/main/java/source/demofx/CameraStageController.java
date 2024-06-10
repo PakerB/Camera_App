@@ -260,7 +260,7 @@ public class CameraStageController extends Controller{
         stage.setTitle("Choose Image");
         stage.setScene(scene);
         stopCamera();
-        System.out.println("ban da chon anh");
+//        System.out.println("ban da chon anh");
         imageStageController.clickChoose();
     }
     static {

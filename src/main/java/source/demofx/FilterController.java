@@ -45,7 +45,7 @@ public class FilterController extends Controller{
         filter_image4.setOnMouseClicked(event -> {filter_button4.fire(); });
         filter_image5.setOnMouseClicked(event -> {filter_button5.fire(); });
 //        filter_image6.setOnMouseClicked(event -> {filter_button6.fire(); });
-        System.out.println("set up ed");
+//        System.out.println("set up ed");
     }
     protected int filterType = 0;
     protected int getFilterType(){

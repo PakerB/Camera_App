@@ -57,7 +57,6 @@ public class ImageStageController extends FilterController{
 
         if (selectedFile != null ) {
             super.setUp();
-
             // Lưu đường dẫn của tệp ảnh đã chọn vào biến cục bộ
             this.imagePath = selectedFile.getAbsolutePath();
             String selectedFolderPath = "selected";
@@ -78,10 +77,13 @@ public class ImageStageController extends FilterController{
 
             Mat originalImage = Imgcodecs.imread(copiedFile.getAbsolutePath());
             originalImage = resizeImage(originalImage,600,450);
+            image.setFitHeight(450);
+            image.setFitWidth(600);
             if (originalImage.empty()) {
                 System.out.println("Không thể mở ảnh: " + copiedFile.getAbsolutePath());
                 return;
             }
+
             Mat newImage = originalImage;
             FaceDetector faceDetector = new FaceDetector();
             List<Rect> facesArray = faceDetector.detectFaces(newImage);
@@ -95,6 +97,7 @@ public class ImageStageController extends FilterController{
             WritableImage resultImage = SwingFXUtils.toFXImage(bufferedImage, null);
 
             image.setImage(resultImage);
+
             ImageZoomPane imageZoomPane = new ImageZoomPane(image);
             this.anchorPane.getChildren().add(imageZoomPane);
         }
@@ -124,7 +127,7 @@ public class ImageStageController extends FilterController{
         // Hiển thị ảnh đã chọn ban đầu
         BufferedImage bufferedImage = matToBufferedImage(newImage);
         WritableImage resultImage = SwingFXUtils.toFXImage(bufferedImage, null);
-        this.image.setImage(resultImage);
+        image.setImage(resultImage);
     }
     @Override
     public void back(ActionEvent event) {

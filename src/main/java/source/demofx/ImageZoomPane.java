@@ -1,10 +1,14 @@
 package source.demofx;
 
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.control.ScrollPane;
+
+import static java.lang.Double.max;
+import static java.lang.Math.min;
 
 //import static com.sun.webkit.graphics.WCImage.getImage;
 
@@ -12,11 +16,9 @@ public class ImageZoomPane extends StackPane {
 
     double scaleFactor = 1;
     private static final double MAX_SCALE = 10.0;
-    private static final double MIN_SCALE = 0.1;
+    private static final double MIN_SCALE = 1;
     private ImageView imageView;
     private ScrollPane scrollPane;
-
-    private double scale = 1.0;
     private double offsetX = 0;
     private double offsetY = 0;
     private double initialX = 0;
@@ -88,7 +90,6 @@ public class ImageZoomPane extends StackPane {
     private void handleMouseDragged(MouseEvent event) {
         offsetX = event.getX() - initialX;
         offsetY = event.getY() - initialY;
-
         // Ensure the image does not go out of bounds
 //        double imageWidth = imageView.getFitWidth();
 //        double imageHeight = imageView.getFitHeight();
