@@ -76,9 +76,10 @@ public class ImageStageController extends FilterController{
             }
 
             Mat originalImage = Imgcodecs.imread(copiedFile.getAbsolutePath());
-            originalImage = resizeImage(originalImage,600,450);
+//            originalImage = resizeImage(originalImage,600,450);
             image.setFitHeight(450);
             image.setFitWidth(600);
+            image.setPreserveRatio(true);
             if (originalImage.empty()) {
                 System.out.println("Không thể mở ảnh: " + copiedFile.getAbsolutePath());
                 return;
@@ -106,7 +107,6 @@ public class ImageStageController extends FilterController{
     public void setImage(ActionEvent event){
         int val = super.getFilterType();
         Mat originalImage = Imgcodecs.imread(copiedFile.getAbsolutePath());
-        originalImage = resizeImage(originalImage,600,450);
         if (originalImage.empty()) {
             System.out.println("Không thể mở ảnh: " + copiedFile.getAbsolutePath());
             return;

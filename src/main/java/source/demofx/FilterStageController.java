@@ -67,6 +67,7 @@ public class FilterStageController extends FilterController {
                     break;
                 } else {
                     try {
+                        Core.flip(frame[0], frame[0], 1);
                         int val = super.getFilterType();
                         if(val > 0){
                             FaceDetector faceDetector = new FaceDetector();

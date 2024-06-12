@@ -83,6 +83,7 @@ public class CameraStageController extends Controller{
                     break;
                 } else {
                     try {
+                        Core.flip(frame, frame, 1);
                         FaceDetector faceDetector = new FaceDetector();
                         List<Rect> facesArray = faceDetector.detectFaces(frame);
                         for (Rect face : facesArray) {
