@@ -211,13 +211,7 @@ public class CameraStageController extends Controller{
     }
 
     // Hiển thị thông báo lỗi khi chưa có ảnh chụp
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
+
 
     private Image captureImage() {
         // Thực hiện chụp ảnh từ originalFrame hoặc nguồn hình ảnh của bạn

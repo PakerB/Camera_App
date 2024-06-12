@@ -145,7 +145,7 @@ public class FilterStageController extends FilterController {
 
         result.ifPresent(name -> {
             if (name.trim().isEmpty()) {
-                showAlert("Invalid Name", "Image name cannot be empty.");
+                super.showAlert("Invalid Name", "Image name cannot be empty.");
                 return;
             }
 
@@ -194,13 +194,6 @@ public class FilterStageController extends FilterController {
         fadeTransition.setToValue(0.0);
         fadeTransition.setOnFinished(e -> anchorPane.getChildren().remove(flash));
         fadeTransition.play();
-    }
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 
     private Image captureImage() {

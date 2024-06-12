@@ -109,7 +109,7 @@
             </GridPane>
          </content>
       </ScrollPane>
-      <Button id="takeAPhoto" fx:id="cameraButton" layoutX="750.0" layoutY="230.0" mnemonicParsing="false" onAction="#clickChoose" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="250.0">
+      <Button id="takeAPhoto" fx:id="cameraButton" layoutX="750.0" layoutY="230.0" mnemonicParsing="false" onAction="#clickChoose" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="225.0">
          <graphic>
             <ImageView fitHeight="70.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -132,5 +132,14 @@
             <Font size="18.0" />
          </font>
       </Label>
+      <Button id="takeAPhoto" fx:id="cameraButton1" layoutX="670.0" layoutY="410.0" mnemonicParsing="false" onAction="#clickCapture">
+         <graphic>
+            <ImageView fitHeight="70.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@interface/Done%20.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>
